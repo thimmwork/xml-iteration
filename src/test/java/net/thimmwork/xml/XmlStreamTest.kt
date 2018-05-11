@@ -1,14 +1,11 @@
 package net.thimmwork.xml
 
+import net.thimmwork.xml.jaxb.XmlTestClass
 import org.junit.Test
 
-import javax.xml.bind.JAXBException
-import javax.xml.stream.XMLStreamException
 import java.io.ByteArrayInputStream
-import java.io.InputStream
 import java.util.Arrays
 import java.util.stream.Collectors
-import java.util.stream.Stream
 
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThat

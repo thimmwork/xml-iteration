@@ -1,4 +1,4 @@
-package net.thimmwork.xml;
+package net.thimmwork.xml.jaxb;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
