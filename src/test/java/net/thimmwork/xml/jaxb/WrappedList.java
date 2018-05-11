@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 
-@XmlRootElement(name= Elements.XMLELEMENTNAME)
+@XmlRootElement(name= WrappedList.XMLELEMENTNAME)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Elements {
+public class WrappedList {
 
     public static final String XMLELEMENTNAME = "root";
     public static final String XMLLISTWRAPPERNAME = "elements";
@@ -20,9 +20,9 @@ public class Elements {
     private List<Element> elements;
 
     @SuppressWarnings("unused")
-    public Elements() {}
+    public WrappedList() {}
 
-    public Elements(List<Element> elements) {
+    public WrappedList(List<Element> elements) {
         this.elements = elements;
     }
 
@@ -36,8 +36,8 @@ public class Elements {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Elements)) return false;
-        Elements testClass = (Elements) o;
+        if (!(o instanceof WrappedList)) return false;
+        WrappedList testClass = (WrappedList) o;
         return Objects.equals(getElements(), testClass.getElements());
     }
 
