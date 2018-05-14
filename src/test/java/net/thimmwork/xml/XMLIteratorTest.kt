@@ -26,7 +26,7 @@ import java.io.ByteArrayInputStream
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThat
 
-class XmlIteratorTest {
+class XMLIteratorTest {
 
     companion object {
         // five items in XML fragments
@@ -46,7 +46,7 @@ class XmlIteratorTest {
 
         val inputStream = ByteArrayInputStream(XML_WITHOUT_SPACES.toByteArray())
 
-        val iterator = XmlIterator(inputStream, XmlTestClass::class.java, XmlTestClass.XMLELEMENTNAME)
+        val iterator = XMLIterator(inputStream, XmlTestClass::class.java, XmlTestClass.XMLELEMENTNAME)
 
         assertThat(iterator.hasNext(), equalTo(true))
         assertThat(iterator.hasNext(), equalTo(true))
@@ -72,7 +72,7 @@ class XmlIteratorTest {
 
         val inputStream = ByteArrayInputStream(XML_WITH_SPACES.toByteArray())
 
-        val iterator = XmlIterator(inputStream, XmlTestClass::class.java, XmlTestClass.XMLELEMENTNAME)
+        val iterator = XMLIterator(inputStream, XmlTestClass::class.java, XmlTestClass.XMLELEMENTNAME)
 
         assertThat(iterator.hasNext(), equalTo(true))
         assertThat(iterator.hasNext(), equalTo(true))

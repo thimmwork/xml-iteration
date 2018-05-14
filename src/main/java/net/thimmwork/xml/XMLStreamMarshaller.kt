@@ -29,39 +29,21 @@ import javax.xml.bind.JAXBElement
 import javax.xml.bind.Marshaller
 import javax.xml.namespace.QName
 
-fun <T> iterator(inputStream: InputStream, clazz: Class<T>, xmlElementName: String): XmlIterator<T>
-        = XmlIterator(inputStream, clazz, xmlElementName)
-
-fun <T> stream(inputStream: InputStream, clazz: Class<T>, xmlElementName: String) =
-        StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-                iterator(inputStream, clazz, xmlElementName), Spliterator.ORDERED),
-                false
-        )
-
-val UTF8 = Charset.forName("UTF-8")
-
-class XMLStreamTransformer<T>(val xmlStreamer: XMLStreamer<T>, wrapperName: String, val elementStream: Stream<T>) {
-
-    private val headerBytes = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?><$wrapperName>""".toByteArray(UTF8)
-    private val footerBytes = """</$wrapperName>""".toByteArray(UTF8)
-
-    fun copy() {
-        xmlStreamer.outputStream.write(headerBytes)
-        elementStream.forEach(xmlStreamer)
-        xmlStreamer.outputStream.write(footerBytes)
-    }
-}
-
-class XMLStreamer<T>(jaxbContext: JAXBContext,
-                     val outputStream: OutputStream,
-                     val clazz: Class<T>,
-                     xmlElementName: String?
+/**
+ * a Consumer that marshalls consumed objects into an XML OutputStream
+ * using the given Mashaller or a marshaller created from the given JAXBContext.
+ */
+class XMLStreamMarshaller<T>(private val marshaller: Marshaller,
+                             val outputStream: OutputStream,
+                             val clazz: Class<T>,
+                             xmlElementName: String?
 ) : Consumer<T> {
-    private val marshaller: Marshaller
+    constructor(jaxbContext: JAXBContext, outputStream: OutputStream, clazz: Class<T>, xmlElementName: String?)
+            : this(jaxbContext.createMarshaller(), outputStream, clazz, xmlElementName)
+
     private val qName: QName
 
     init {
-        marshaller = jaxbContext.createMarshaller()
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true)
         qName = QName(xmlElementName)
     }

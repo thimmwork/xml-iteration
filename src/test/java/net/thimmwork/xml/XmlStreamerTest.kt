@@ -41,7 +41,7 @@ class XmlStreamerTest {
         val footerBytes = """</$wrapperName></$rootName>""".toByteArray(utf8Charset)
 
         val outputStream = ByteArrayOutputStream()
-        val sut = XMLStreamer(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
+        val sut = XMLStreamMarshaller(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
 
         val list = listOf(
                 Element("first"),
@@ -72,7 +72,7 @@ class XmlStreamerTest {
         val footerBytes = """</$rootName>""".toByteArray(utf8Charset)
 
         val outputStream = ByteArrayOutputStream()
-        val sut = XMLStreamer(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
+        val sut = XMLStreamMarshaller(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
 
         val list = listOf(
                 Element("first"),
@@ -99,14 +99,14 @@ class XmlStreamerTest {
         val jaxbContext = JAXBContext.newInstance(UnwrappedList::class.java, Element::class.java)
         val rootName = UnwrappedList.XMLELEMENTNAME
         val outputStream = ByteArrayOutputStream()
-        val xmlStreamer = XMLStreamer(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
+        val xmlStreamer = XMLStreamMarshaller(jaxbContext, outputStream, Element::class.java, Element.XMLELEMENTNAME)
 
         val list = listOf(
                 Element("first"),
                 Element("second"),
                 Element("third")
         )
-        val sut = XMLStreamTransformer(xmlStreamer, rootName, list.stream())
+        val sut = XMLStreamWrapper(xmlStreamer, list.stream(), rootName)
 
         //WHEN
         sut.copy()

@@ -17,7 +17,6 @@
 package net.thimmwork.xml
 
 import javax.xml.bind.JAXBContext
-import javax.xml.bind.JAXBElement
 import javax.xml.bind.JAXBException
 import javax.xml.bind.Unmarshaller
 import javax.xml.stream.XMLInputFactory
@@ -25,13 +24,29 @@ import javax.xml.stream.XMLStreamConstants
 import javax.xml.stream.XMLStreamException
 import javax.xml.stream.XMLStreamReader
 import java.io.InputStream
-import java.util.NoSuchElementException
+import java.util.*
+import java.util.stream.StreamSupport
 
 /**
+ * convenience method that creates an XMLIterator and wraps it in a stream by using a spliterator of unknown size
+ */
+fun <T> stream(inputStream: InputStream, clazz: Class<T>, xmlElementName: String) =
+        StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                XMLIterator(inputStream, clazz, xmlElementName), Spliterator.ORDERED),
+                false
+        )
+
+/**
+ * An Iterator that lazily processes an XML InputStream and provides a means to deserialize only objects of type T.
+ *
+ * The inputStream is read to the next relevant closing tag on invocations of hasNext() or on invocations of next()
+ * if no hasNext() invocation occured since the last invocation to next()
  * @author dalelane, notsaltfish, thimmwork
  * @param T class to deserialize
+ * @throws JAXBException if tClazz is not a JAXB class
+ * @throws XMLStreamException if the inputStream cannot be read
  */
-class XmlIterator<T> @Throws(JAXBException::class, XMLStreamException::class)
+class XMLIterator<T> @Throws(JAXBException::class, XMLStreamException::class)
 constructor(inputStream: InputStream,
             private val tClazz: Class<T>,
             private val xmlElementName: String
