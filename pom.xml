@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>xml-iteration</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>Thimmwork XML-Iteration</name>
     <description>a lightweight collection of utilities for iterating and parsing xml streams based on JAXB</description>
