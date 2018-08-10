@@ -28,10 +28,10 @@ import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import javax.xml.bind.JAXBContext
 
-class XmlStreamerTest {
+class XmlStreamMarshallerTest {
 
     @Test
-    fun `XMLStreamer produces outputStream for wrapped list that can be deserialized with JAXB`() {
+    fun `XMLStreamMarshaller produces outputStream for wrapped list that can be deserialized with JAXB`() {
         //GIVEN
         val jaxbContext = JAXBContext.newInstance(WrappedList::class.java, Element::class.java)
         val wrapperName = WrappedList.XMLLISTWRAPPERNAME
@@ -63,7 +63,7 @@ class XmlStreamerTest {
     }
 
     @Test
-    fun `XMLStreamer produces outputStream for unwrapped list that can be deserialized with JAXB`() {
+    fun `XMLStreamMarshaller produces outputStream for unwrapped list that can be deserialized with JAXB`() {
         //GIVEN
         val jaxbContext = JAXBContext.newInstance(UnwrappedList::class.java, Element::class.java)
         val rootName = UnwrappedList.XMLELEMENTNAME
@@ -94,7 +94,7 @@ class XmlStreamerTest {
     }
 
     @Test
-    fun `XMLStreamTransformer produces outputStream for unwrapped list that can be deserialized with JAXB`() {
+    fun `XMLStreamWrapper produces outputStream for unwrapped list that can be deserialized with JAXB`() {
         //GIVEN
         val jaxbContext = JAXBContext.newInstance(UnwrappedList::class.java, Element::class.java)
         val rootName = UnwrappedList.XMLELEMENTNAME
